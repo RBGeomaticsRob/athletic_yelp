@@ -51,15 +51,20 @@ feature 'restaurants' do
       click_link 'Edit KFC'
       fill_in 'Name', with: 'McDonalds'
       click_button 'Update Restaurant'
-      expect(current_path).to eq 'restaurants'
+      expect(current_path).to eq '/restaurants'
       expect(page).to have_content 'McDonalds'
     end
   end
 
   context 'deleting restaurants' do
 
-    xscenario 'remove a restaurant when a user click remove' do
+    before { Restaurant.create(name: 'KFC') }
 
+    scenario 'remove a restaurant when a user click remove' do
+      visit '/restaurants'
+      click_link 'Delete KFC'
+      expect(page).not_to have_content 'KFC'
+      expect(page).to have_content 'Restaurant deleted'
     end
   end
 
